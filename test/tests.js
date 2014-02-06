@@ -808,3 +808,21 @@ describe('type definition', function() {
     o.customString.should.equal('12345678901');
   });
 });
+
+describe('validation', function()
+{
+    it('should apply validators', function()
+    {
+        var SO = new SchemaObject({
+            name: {type:String,  validators:{required: true, minLength:6, maxLength:500}},
+            names:{
+                first:{type:String, validators:{minLength:4}},
+                last:{type:String,  validators:{required:true}}
+            },
+            arrayTest: {type:Array, arrayType:String, validators:{minLength:10}}
+        })
+        var so = new SO({name:'Bob',names:{first:'Tim'},arrayTest:['Smoo']});
+        var errors = so.validate();
+        console.log('Errors',errors);
+    })
+})
